@@ -16,7 +16,14 @@ public class Application {
 
     private  void execute() {
         final CommandDictionary commandDictionary = new CommandDictionary();
-        ActionListenerFactory factory = new ActionListenerFactory() {
+        ActionListenerFactory factory = createActionListenerFactory(commandDictionary);
+        final ApplicationFrame frame = new ApplicationFrame(factory);
+        setCommandDictionary(commandDictionary, frame);
+        
+    }
+
+    private ActionListenerFactory createActionListenerFactory(final CommandDictionary commandDictionary) {
+         return new ActionListenerFactory() {
             @Override
             public ActionListener getAction(final String action) {
                 return new ActionListener() {
@@ -27,7 +34,9 @@ public class Application {
                 };
             }
         };
-        final ApplicationFrame frame = new ApplicationFrame(factory);
+    }
+
+    private void setCommandDictionary(CommandDictionary commandDictionary, final ApplicationFrame frame) {
         commandDictionary.register("calculate", new CalculateCommand(frame.getMoneyDialog(), frame.getCurrencyDialog()));
         commandDictionary.register("exit", new Command() {
             @Override
