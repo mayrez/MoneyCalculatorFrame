@@ -1,17 +1,14 @@
-package Application;
+package ui;
 
+import persistance.ActionListenerFactory;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JPanel;
-import ui.CurrencyDialog;
-import ui.CurrencyDialogPanel;
-import ui.MoneyDialog;
-import ui.MoneyDialogPanel;
 
-class ApplicationFrame extends JFrame {
+public class ApplicationFrame extends JFrame {
 
     private MoneyDialog moneyDialog;
     private CurrencyDialog currencyDialog;
