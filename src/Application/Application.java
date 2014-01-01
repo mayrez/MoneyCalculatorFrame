@@ -9,10 +9,10 @@ import java.awt.event.ActionListener;
 public class Application {
 
     public static void main(String[] args) {
-        execute();
+        new Application().execute();
     }
 
-    private static void execute() {
+    private  void execute() {
         final CommandDictionary commandDictionary = new CommandDictionary();
         ActionListenerFactory factory = new ActionListenerFactory() {
             @Override
