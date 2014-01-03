@@ -1,5 +1,7 @@
 package ui;
 
+import ui.interfaces.MoneyDialog;
+import ui.interfaces.CurrencyDialog;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

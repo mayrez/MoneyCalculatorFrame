@@ -1,4 +1,4 @@
-package persistance;
+package ui.interfaces;
 
 import java.awt.event.ActionListener;
 

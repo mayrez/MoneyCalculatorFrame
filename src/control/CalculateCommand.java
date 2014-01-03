@@ -4,8 +4,8 @@ import model.ExchangeRate;
 import model.Money;
 import model.MoneyExchanger;
 import persistance.DataBaseExchangeRateLoader;
-import ui.CurrencyDialog;
-import ui.MoneyDialog;
+import ui.interfaces.CurrencyDialog;
+import ui.interfaces.MoneyDialog;
 import ui.MoneyDialogPanel;
 
 public class CalculateCommand extends Command {
