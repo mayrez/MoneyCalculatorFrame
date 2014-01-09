@@ -31,7 +31,7 @@ public class DataBaseCurrencySetLoader implements CurrencySetLoader {
             createStatement();
 
             while (resultSet.next()) {
-                currencySet.add(new Currency("DIVISA"));
+                currencySet.add(new Currency(resultSet.getString("DIVISA")));
             }
 
 
