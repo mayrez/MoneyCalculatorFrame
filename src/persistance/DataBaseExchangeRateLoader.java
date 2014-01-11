@@ -24,7 +24,7 @@ public class DataBaseExchangeRateLoader implements ExchangeRateLoader {
     public ExchangeRate load(Currency from, Currency to, Date date) {
         try {
             createStatement();
-            createResultSet(date, from);
+            createResultSet(date, to);
             while (resultSet.next()) {
                 if (resultSet.getString("DIVISA").equalsIgnoreCase(to.getCode().toString())) {
                     return new ExchangeRate().load(from, to, Double.valueOf(resultSet.getString("CAMBIO")));
@@ -44,7 +44,7 @@ public class DataBaseExchangeRateLoader implements ExchangeRateLoader {
     public ExchangeRate load(Currency from, Currency to) {
         try {
             createStatement();
-            createResultSet(from);
+            createResultSet(to);
             while (resultSet.next()) {
                 if (resultSet.getString("DIVISA").equalsIgnoreCase(to.getCode().toString())) {
                     return new ExchangeRate().load(from, to, Double.valueOf(resultSet.getString("CAMBIO")));
