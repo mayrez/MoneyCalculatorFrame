@@ -15,21 +15,29 @@ public class DataBaseCurrencySetLoader implements CurrencySetLoader {
     private ResultSet resultSet;
     private Connection connection;
     private Statement statement;
-    private static final String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
-    private static final String USR = "system";
-    private static final String PASSWD = "orcl";
+    private static DataBaseCurrencySetLoader INSTANCE;
 
-    public DataBaseCurrencySetLoader() {
+    private DataBaseCurrencySetLoader(Connection connection) {
+        this.connection = connection;
     }
+
+    public static CurrencySetLoader getInstance(Connection connection) {
+        if (INSTANCE == null) {
+            INSTANCE = new DataBaseCurrencySetLoader(connection);
+        }
+
+        return INSTANCE;
+
+    }
+
 
     @Override
     public CurrencySet load() {
         CurrencySet currencySet = CurrencySet.getInstance();
         try {
 
-            createConection();
-            createStatement();
-
+            createResultSet();
+            currencySet.add(new Currency("EUR"));
             while (resultSet.next()) {
                 currencySet.add(new Currency(resultSet.getString("DIVISA")));
             }
@@ -41,13 +49,7 @@ public class DataBaseCurrencySetLoader implements CurrencySetLoader {
         return currencySet;
     }
 
-    private void createConection() throws SQLException {
-        DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-        connection = DriverManager.getConnection(URL, USR, PASSWD);
-
-    }
-
-    private void createStatement() {
+    private void createResultSet() {
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM CAMBIO_EUR_A");

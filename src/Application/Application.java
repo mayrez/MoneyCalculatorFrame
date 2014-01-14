@@ -12,6 +12,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import persistance.CurrencySetLoader;
+import persistance.DataBaseCurrencySetLoader;
 import persistance.DataBaseExchangeRateLoader;
 import persistance.ExchangeRateLoader;
 
@@ -22,10 +24,18 @@ public class Application {
     }
 
     private void execute() {
+        try {
+            CurrencySetLoader currencySetLoader = createCurrencySetLoader();
+            currencySetLoader.load();
+        } catch (Exception ex) {
+            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         final CommandDictionary commandDictionary = new CommandDictionary();
         ActionListenerFactory factory = createActionListenerFactory(commandDictionary);
         final ApplicationFrame frame = new ApplicationFrame(factory);
         try {
+            
             ExchangeRateLoader exchangeRateLoader = createExchangeRateLoader();
             setCommandDictionary(commandDictionary, frame, exchangeRateLoader);
         } catch (SQLException ex) {
@@ -75,4 +85,19 @@ public class Application {
         return connection;
 
     }
+
+    private CurrencySetLoader createCurrencySetLoader() {
+        return createDataBaseCurrencySetLoader();
+        
+    }
+
+    private CurrencySetLoader createDataBaseCurrencySetLoader() {
+        try {
+            return DataBaseCurrencySetLoader.getInstance(createConnection());
+        } catch (SQLException ex) {
+            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
 }
