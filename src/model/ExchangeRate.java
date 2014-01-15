@@ -7,24 +7,29 @@ public class ExchangeRate {
     private Date date;
     private Currency from;
     private Currency to;
-    private Double rate;
+    private Number rate;
 
-    public ExchangeRate(Date date, Currency from, Currency to, Double rate) {
+    public ExchangeRate(Date date, Currency from, Currency to, Number rate) {
         this.date = date;
         this.from = from;
         this.to = to;
         this.rate = rate;
     }
 
-    public ExchangeRate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ExchangeRate(Currency from, Currency to, Number rate) {
+        this.from = from;
+        this.to = to;
+        this.rate = rate;
     }
 
-    public ExchangeRate load(Date date, Currency from, Currency to, Double rate) {
+    public ExchangeRate() {
+    }
+
+    public ExchangeRate load(Date date, Currency from, Currency to, Number rate) {
         return new ExchangeRate(date, from, to, rate);
     }
 
-    public ExchangeRate load(Currency from, Currency to, Double rate) {
+    public ExchangeRate load(Currency from, Currency to, Number rate) {
         return load(new Date(), from, to, rate);
     }
 
@@ -40,7 +45,7 @@ public class ExchangeRate {
         return date;
     }
 
-    public Double getRate() {
+    public Number getRate() {
         return rate;
     }
 }

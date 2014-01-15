@@ -80,7 +80,7 @@ public class Number {
         }
     }
 
-    public static Number multiply(Number number1, Number number2) {
+    public static Number multiplicate(Number number1, Number number2) {
         Number result;
         result = new Number(number1.numerator * number2.numerator, number1.denominator * number2.denominator);
         return result;
@@ -107,5 +107,16 @@ public class Number {
             return false;
         }
         return true;
+    }
+
+    public Number divide(double exchangeRate) {
+        return divide(new Number(exchangeRate));
+    }
+
+    public Number divide(Number exchangeRate) {
+        this.numerator *= exchangeRate.denominator;
+        this.denominator *= exchangeRate.numerator;
+        reduce();
+        return new Number(this.numerator, this.denominator);
     }
 }

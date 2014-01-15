@@ -9,21 +9,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import model.Money;
+import model.Number;
 
 public class MoneyDialogPanel extends JPanel implements MoneyDialog {
 
-    private String amount;
+    private Double amount;
     private CurrencyDialog currencyDialog;
 
     public MoneyDialogPanel() {
         super(new FlowLayout(FlowLayout.LEFT));
-        this.amount = "0";
+        this.amount = 0.0;
         this.createComponents();
     }
 
     private JTextField createAmountField() {
         final JTextField textField = new JTextField(10);
-        textField.setText(amount);
+        textField.setText("0.0");
         textField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent ke) {
@@ -35,7 +36,8 @@ public class MoneyDialogPanel extends JPanel implements MoneyDialog {
 
             @Override
             public void keyReleased(KeyEvent ke) {
-                amount = textField.getText();
+                amount = Double.parseDouble(textField.getText());
+                ;
             }
         });
         return textField;
@@ -59,6 +61,6 @@ public class MoneyDialogPanel extends JPanel implements MoneyDialog {
     @Override
     public Money getMoney() {
         currencyDialog = (CurrencyDialogPanel) currencyDialog;
-        return new Money(Double.parseDouble(amount), currencyDialog.getCurrency());
+        return new Money(new Number(amount), currencyDialog.getCurrency());
     }
 }

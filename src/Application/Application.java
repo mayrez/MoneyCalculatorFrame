@@ -34,8 +34,9 @@ public class Application {
         final CommandDictionary commandDictionary = new CommandDictionary();
         ActionListenerFactory factory = createActionListenerFactory(commandDictionary);
         final ApplicationFrame frame = new ApplicationFrame(factory);
+        frame.execute();
         try {
-            
+
             ExchangeRateLoader exchangeRateLoader = createExchangeRateLoader();
             setCommandDictionary(commandDictionary, frame, exchangeRateLoader);
         } catch (SQLException ex) {
@@ -77,27 +78,26 @@ public class Application {
         return new DataBaseExchangeRateLoader(createConnection());
     }
 
-    private Connection createConnection() throws SQLException {
-        Connection connection;
-        DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-        connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "system", "system");
+    private Connection createConnection() {
+        try {
+            Connection connection;
+            DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "system", "system");
 
-        return connection;
-
+            return connection;
+        } catch (SQLException ex) {
+            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     private CurrencySetLoader createCurrencySetLoader() {
         return createDataBaseCurrencySetLoader();
-        
+
     }
 
     private CurrencySetLoader createDataBaseCurrencySetLoader() {
-        try {
-            return DataBaseCurrencySetLoader.getInstance(createConnection());
-        } catch (SQLException ex) {
-            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-    }
+        return DataBaseCurrencySetLoader.getInstance(createConnection());
 
+    }
 }

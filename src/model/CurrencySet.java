@@ -28,7 +28,7 @@ public class CurrencySet extends HashSet<Currency> {
 
     }
 
-    private Currency[] currencyList(String string) {
+    public Currency[] currencyList(String string) {
         ArrayList<Currency> list = new ArrayList<>();
         for (Currency currency : this) {
             if (currency.getCode().toLowerCase().contains(string.toLowerCase())) {

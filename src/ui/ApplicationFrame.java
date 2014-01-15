@@ -23,7 +23,7 @@ public class ApplicationFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.createComponents();
-        this.setVisible(true);
+        
     }
 
     private void createComponents() {
@@ -75,5 +75,8 @@ public class ApplicationFrame extends JFrame {
 
     public CurrencyDialog getCurrencyDialog() {
         return currencyDialog;
+    }
+    public void execute (){
+        this.setVisible(true);
     }
 }

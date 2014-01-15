@@ -2,38 +2,42 @@ package ui;
 
 import ui.interfaces.CurrencyDialog;
 import java.awt.FlowLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import model.Currency;
+import model.CurrencySet;
 
 public class CurrencyDialogPanel extends JPanel implements CurrencyDialog {
 
-    private String currency;
+    private Currency currency;
 
     public CurrencyDialogPanel() {
         super(new FlowLayout(FlowLayout.LEFT));
         this.add(createComboBox());
-        this.currency = "EUR";
+        this.currency = new Currency("EUR");
     }
 
-    private JComboBox createComboBox() {
-        final JComboBox comboBox = new JComboBox(new String[]{"EUR", "USD", "GBP"});
-        comboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent ie) {
-                if (ie.getStateChange() != ItemEvent.SELECTED) {
-                    return;
+    private JComboBox createComboBox() {       
+
+        final JComboBox comboBox = new JComboBox();
+        for (Currency currencies : CurrencySet.getInstance()) {
+            comboBox.addItem(currencies);
+            currency = CurrencySet.getInstance().iterator().next();
+            comboBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    currency = (Currency) comboBox.getSelectedItem();
                 }
-                currency = (String) comboBox.getSelectedItem();
-            }
-        });
+            });
+        }
+
         return comboBox;
     }
 
     @Override
     public Currency getCurrency() {
-        return new Currency(currency);
+        return currency;
     }
 }
